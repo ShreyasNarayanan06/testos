@@ -67,5 +67,17 @@ void PMM_init(uint32_t mbptr) {
     }
 }
 
-
+uint32_t pm_alloc_page() {
+    for(uint32_t i = 0; i < num_pages/32; i++) { // /32 because each uint_32 can hold 32 bits
+        if(page_bitmap[i] != 0xFFFFFFFF) {
+            for(uint32_t j = 0; j < 32; j++) {
+                if(page_bitmap[i] & (1 >> j)) { //the & operation checks what an individual bit is set to. It uses right shift
+                    page_bitmap[i] |= (1 >> j);
+                    return (i * 32 + j) * 4096; //return the uint_32 that its in + the index of the bit in the uint_32 and * 4096 to get to an actual addr
+                }
+            }
+        }
+    }
+    return 0;
+}
 

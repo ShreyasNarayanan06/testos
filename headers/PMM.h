@@ -14,3 +14,4 @@ extern uint32_t* page_bitmap;
 
 void MIS_data(uint32_t mbptr);
 void PMM_init(uint32_t mbptr);
+uint32_t pm_alloc_page();

@@ -7,16 +7,15 @@
 #include "../headers/idt.h"
 #include "../headers/io.h"
 #include "../headers/PMM.h"
+#include "../headers/VMM.h"
 
 void kernel_main(uint32_t mbptr) {
     terminal_initialize();
 	init_IDT();
 	pic_init();
 	PMM_init(mbptr);
-
-	// terminal_writestring("Number of pages: ");
-	// terminal_writenumber(num_pages);
-	// terminal_enter();
+    heap_init();
+	vmem_init();
 
 	asm volatile ("sti");
 
