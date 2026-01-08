@@ -137,6 +137,7 @@ void terminal_removechar() {
 	}
     
 	terminal_putentryat(' ', t_color, t_col, t_row);
+	command_buffer_removechar();
 	update_cursor(t_col, t_row);
 }
 

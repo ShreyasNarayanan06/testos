@@ -174,7 +174,10 @@ void process_keyboard_input(uint8_t scancode){
 				break;
 
 		// Special
-		case 0x39: terminal_putchar(' '); break; // Spacebar
+		case 0x39: 
+			fill_buffer(' ');
+			terminal_putchar(' '); 
+			break; // Spacebar
 		case 0x1C: 
 			check_command();
 			clear_buffer();
