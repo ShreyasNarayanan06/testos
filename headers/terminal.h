@@ -19,5 +19,6 @@ void terminal_arrow_left();
 // void terminal_arrow_down();
 void terminal_writenumber(uint32_t n);
 void terminal_clear();
+void terminal_enter_no_prompt();
 
 

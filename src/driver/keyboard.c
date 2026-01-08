@@ -175,7 +175,11 @@ void process_keyboard_input(uint8_t scancode){
 
 		// Special
 		case 0x39: terminal_putchar(' '); break; // Spacebar
-		case 0x1C: check_command(); terminal_enter(); break; // Enter
+		case 0x1C: 
+			check_command();
+			clear_buffer();
+			break; 
+		
 		case 0x0E: is_extended = 1; terminal_removechar(); break; // Backspace
 		case 0x0F: terminal_writestring("   "); break; // Tab
 

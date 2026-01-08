@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include "../../headers/io.h"
 #include "../../headers/terminal.h"
+#include "../../headers/commands.h"
 
 #define PROMPT "naray % "
 #define PROMPT_LENGTH 8
@@ -145,7 +146,17 @@ void terminal_enter() {
 
 	t_col = 0;
 	
+	clear_buffer();
 	terminal_writestring(PROMPT);
+	update_cursor(t_col, t_row);
+}
+
+void terminal_enter_no_prompt() {
+	if(t_row == VGA_HEIGHT - 1) t_row = 0;
+	else t_row++;
+
+	t_col = 0;
+	
 	update_cursor(t_col, t_row);
 }
 
