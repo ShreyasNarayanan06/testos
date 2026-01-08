@@ -84,7 +84,7 @@ void command_help() {
     terminal_enter_no_prompt();
     terminal_writestring("echo <text>: repeat the argument");
     terminal_enter_no_prompt();
-    terminal_writestring("info: display OS version and author information");
+    terminal_writestring("info: display OS version, release date, and author information");
     terminal_enter_no_prompt();
     terminal_writestring("usr: display current user");
     terminal_enter();
