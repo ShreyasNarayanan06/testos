@@ -82,12 +82,26 @@ void command_help() {
     terminal_enter_no_prompt();
     terminal_writestring("clear: clear the terminal");
     terminal_enter_no_prompt();
+    terminal_writestring("echo: repeat the argument");
+    terminal_enter_no_prompt();
     terminal_enter();
 }
 
 void command_echo() {
     terminal_enter_no_prompt();
     terminal_writestring(arg);
+    terminal_enter();
+}
+
+void command_info() {
+    terminal_enter_no_prompt();
+    terminal_writestring("testos | v0.1 | naray | 1/8/2026");
+    terminal_enter();
+}
+
+void command_usr() {
+    terminal_enter_no_prompt();
+    terminal_writestring("User: naray");
     terminal_enter();
 }
 
@@ -109,6 +123,10 @@ void check_command() {
     command_help();
   } else if(str_cmp(command, "echo")) {
     command_echo();
+  } else if(str_cmp(command, "info")) {
+    command_info();
+  } else if(str_cmp(command, "usr")) {
+    command_usr();
   } else { //needs work
     // terminal_writenumber(checkspace());
     terminal_enter_no_prompt();
