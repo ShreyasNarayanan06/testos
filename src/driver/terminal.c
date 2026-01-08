@@ -1,8 +1,10 @@
+#include <stddef.h>
 #include <stdint.h>
 #include "../../headers/io.h"
 #include "../../headers/terminal.h"
 
-
+#define PROMPT "naray % "
+#define PROMPT_LENGTH 8
 
 enum vga_color {
 	VGA_COLOR_BLACK = 0, //colors are sourced from the VGA Color Table 
@@ -69,6 +71,7 @@ void terminal_initialize(void) { //initializes the terminal
 		}
 	}
 
+	terminal_writestring(PROMPT);
 	update_cursor(t_col, t_row);
 }
 
@@ -126,24 +129,23 @@ void terminal_writenumber(uint32_t n) {
 }
 
 void terminal_removechar() {
-	if (t_col > 0) {
+	if (t_col > PROMPT_LENGTH) {
         t_col--;
-    } else if (t_row > 0) {
-        t_row--;
-        t_col = VGA_WIDTH - 1;
     } else {
-        return; 
-    }
-
+		return;
+	}
+    
 	terminal_putentryat(' ', t_color, t_col, t_row);
 	update_cursor(t_col, t_row);
 }
 
 void terminal_enter() {
-	if(t_row == VGA_HEIGHT - 1) return;
-	t_row++;
-	t_col = 0;
+	if(t_row == VGA_HEIGHT - 1) t_row = 0;
+	else t_row++;
 
+	t_col = 0;
+	
+	terminal_writestring(PROMPT);
 	update_cursor(t_col, t_row);
 }
 
@@ -159,18 +161,31 @@ void terminal_arrow_left() {
 	else t_col--;
 
 	update_cursor(t_col, t_row);
+
 }
 
-void terminal_arrow_up() {
-	if(t_row == 0) t_row = VGA_HEIGHT - 1;
-	else t_row--;
+// void terminal_arrow_up() {
+// 	if(t_row == 0) t_row = VGA_HEIGHT - 1;
+// 	else t_row--;
 
-	update_cursor(t_col, t_row);
-}
+// 	update_cursor(t_col, t_row);
+// }
 
-void terminal_arrow_down() {
-	if(t_row == VGA_HEIGHT - 1) t_row = 0;
-	else t_row++;
+// void terminal_arrow_down() {
+// 	if(t_row == VGA_HEIGHT - 1) t_row = 0;
+// 	else t_row++;
 
-	update_cursor(t_col, t_row);
+// 	update_cursor(t_col, t_row);
+// }
+
+void terminal_clear() {
+    for (size_t i = 0; i < VGA_HEIGHT * VGA_WIDTH; i++) {
+        t_buffer[i] = vga_entry(' ', t_color);
+    }
+
+    t_row = 0;
+    t_col = 0;
+
+    terminal_writestring(PROMPT);
+    update_cursor(t_col, t_row);
 }

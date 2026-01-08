@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include "../../headers/io.h"
 #include "../../headers/keyboard.h"
+#include "../../headers/commands.h"
 
 int shift_pressed;
 int is_extended;
@@ -28,70 +29,208 @@ void process_keyboard_input(uint8_t scancode){
 
 	switch(scancode) {
 		// Numbers
-		case 0x02: terminal_putchar(shift_pressed ? '!' : '1'); break;
-		case 0x03: terminal_putchar(shift_pressed ? '@' : '2'); break;
-		case 0x04: terminal_putchar(shift_pressed ? '#' : '3'); break;
-		case 0x05: terminal_putchar(shift_pressed ? '$' : '4'); break;
-		case 0x06: terminal_putchar(shift_pressed ? '%' : '5'); break;
-		case 0x07: terminal_putchar(shift_pressed ? '^' : '6'); break;
-		case 0x08: terminal_putchar(shift_pressed ? '&' : '7'); break;
-		case 0x09: terminal_putchar(shift_pressed ? '*' : '8'); break;
-		case 0x0A: terminal_putchar(shift_pressed ? '(' : '9'); break;
+		case 0x02: 
+				fill_buffer(shift_pressed ? '!' : '1');
+				terminal_putchar(shift_pressed ? '!' : '1');
+				break;
+		case 0x03: 
+				fill_buffer(shift_pressed ? '@' : '2');
+				terminal_putchar(shift_pressed ? '@' : '2');
+				break;
+		case 0x04: 
+				fill_buffer(shift_pressed ? '#' : '3');
+				terminal_putchar(shift_pressed ? '#' : '3');
+				break;
+		case 0x05: 
+				fill_buffer(shift_pressed ? '$' : '4');
+				terminal_putchar(shift_pressed ? '$' : '4');
+				break;
+		case 0x06: 
+				fill_buffer(shift_pressed ? '%' : '5');
+				terminal_putchar(shift_pressed ? '%' : '5');
+				break;
+		case 0x07: 
+				fill_buffer(shift_pressed ? '^' : '6');
+				terminal_putchar(shift_pressed ? '^' : '6');
+				break;
+		case 0x08: 
+				fill_buffer(shift_pressed ? '&' : '7');
+				terminal_putchar(shift_pressed ? '&' : '7');
+				break;
+		case 0x09: 
+				fill_buffer(shift_pressed ? '*' : '8');
+				terminal_putchar(shift_pressed ? '*' : '8');
+				break;
+		case 0x0A: 
+				fill_buffer(shift_pressed ? '(' : '9');
+				terminal_putchar(shift_pressed ? '(' : '9');
+				break;
 		case 0x0B: terminal_putchar(shift_pressed ? ')' : '0'); break;
 
 		// Letters
-		case 0x10: terminal_putchar(shift_pressed ? 'Q' : 'q'); break;
-		case 0x11: terminal_putchar(shift_pressed ? 'W' : 'w'); break;
-		case 0x12: terminal_putchar(shift_pressed ? 'E' : 'e'); break;
-		case 0x13: terminal_putchar(shift_pressed ? 'R' : 'r'); break;
-		case 0x14: terminal_putchar(shift_pressed ? 'T' : 't'); break;
-		case 0x15: terminal_putchar(shift_pressed ? 'Y' : 'y'); break;
-		case 0x16: terminal_putchar(shift_pressed ? 'U' : 'u'); break;
-		case 0x17: terminal_putchar(shift_pressed ? 'I' : 'i'); break;
-		case 0x18: terminal_putchar(shift_pressed ? 'O' : 'o'); break;
-		case 0x19: terminal_putchar(shift_pressed ? 'P' : 'p'); break;
-		case 0x1E: terminal_putchar(shift_pressed ? 'A' : 'a'); break;
-		case 0x1F: terminal_putchar(shift_pressed ? 'S' : 's'); break;
-		case 0x20: terminal_putchar(shift_pressed ? 'D' : 'd'); break;
-		case 0x21: terminal_putchar(shift_pressed ? 'F' : 'f'); break;
-		case 0x22: terminal_putchar(shift_pressed ? 'G' : 'g'); break;
-		case 0x23: terminal_putchar(shift_pressed ? 'H' : 'h'); break;
-		case 0x24: terminal_putchar(shift_pressed ? 'J' : 'j'); break;
-		case 0x25: terminal_putchar(shift_pressed ? 'K' : 'k'); break;
-		case 0x26: terminal_putchar(shift_pressed ? 'L' : 'l'); break;
-		case 0x2C: terminal_putchar(shift_pressed ? 'Z' : 'z'); break;
-		case 0x2D: terminal_putchar(shift_pressed ? 'X' : 'x'); break;
-		case 0x2E: terminal_putchar(shift_pressed ? 'C' : 'c'); break;
-		case 0x2F: terminal_putchar(shift_pressed ? 'V' : 'v'); break;
-		case 0x30: terminal_putchar(shift_pressed ? 'B' : 'b'); break;
-		case 0x31: terminal_putchar(shift_pressed ? 'N' : 'n'); break;
-		case 0x32: terminal_putchar(shift_pressed ? 'M' : 'm'); break;
+		case 0x10: 
+				fill_buffer(shift_pressed ? 'Q' : 'q');
+				terminal_putchar(shift_pressed ? 'Q' : 'q');
+				break;
+		case 0x11: 
+				fill_buffer(shift_pressed ? 'W' : 'w');
+				terminal_putchar(shift_pressed ? 'W' : 'w');
+				break;
+		case 0x12: 
+				fill_buffer(shift_pressed ? 'E' : 'e');
+				terminal_putchar(shift_pressed ? 'E' : 'e');
+				break;
+		case 0x13: 
+				fill_buffer(shift_pressed ? 'R' : 'r');
+				terminal_putchar(shift_pressed ? 'R' : 'r');
+				break;
+		case 0x14: 
+				fill_buffer(shift_pressed ? 'T' : 't');
+				terminal_putchar(shift_pressed ? 'T' : 't');
+				break;
+		case 0x15: 
+				fill_buffer(shift_pressed ? 'Y' : 'y');
+				terminal_putchar(shift_pressed ? 'Y' : 'y');
+				break;
+		case 0x16: 
+				fill_buffer(shift_pressed ? 'U' : 'u');
+				terminal_putchar(shift_pressed ? 'U' : 'u');
+				break;
+		case 0x17: 
+				fill_buffer(shift_pressed ? 'I' : 'i');
+				terminal_putchar(shift_pressed ? 'I' : 'i');
+				break;
+		case 0x18: 
+				fill_buffer(shift_pressed ? 'O' : 'o');
+				terminal_putchar(shift_pressed ? 'O' : 'o');
+				break;
+		case 0x19: 
+				fill_buffer(shift_pressed ? 'P' : 'p');
+				terminal_putchar(shift_pressed ? 'P' : 'p');
+				break;
+		case 0x1E: 
+				fill_buffer(shift_pressed ? 'A' : 'a');
+				terminal_putchar(shift_pressed ? 'A' : 'a');
+				break;
+		case 0x1F: 
+				fill_buffer(shift_pressed ? 'S' : 's');
+				terminal_putchar(shift_pressed ? 'S' : 's');
+				break;
+		case 0x20: 
+				fill_buffer(shift_pressed ? 'D' : 'd');
+				terminal_putchar(shift_pressed ? 'D' : 'd');
+				break;
+		case 0x21: 
+				fill_buffer(shift_pressed ? 'F' : 'f');
+				terminal_putchar(shift_pressed ? 'F' : 'f');
+				break;
+		case 0x22: 
+				fill_buffer(shift_pressed ? 'G' : 'g');
+				terminal_putchar(shift_pressed ? 'G' : 'g');
+				break;
+		case 0x23: 
+				fill_buffer(shift_pressed ? 'H' : 'h');
+				terminal_putchar(shift_pressed ? 'H' : 'h');
+				break;
+		case 0x24: 
+				fill_buffer(shift_pressed ? 'J' : 'j');
+				terminal_putchar(shift_pressed ? 'J' : 'j');
+				break;
+		case 0x25: 
+				fill_buffer(shift_pressed ? 'K' : 'k');
+				terminal_putchar(shift_pressed ? 'K' : 'k');
+				break;
+		case 0x26: 
+				fill_buffer(shift_pressed ? 'L' : 'l');
+				terminal_putchar(shift_pressed ? 'L' : 'l');
+				break;
+		case 0x2C: 
+				fill_buffer(shift_pressed ? 'Z' : 'z');
+				terminal_putchar(shift_pressed ? 'Z' : 'z');
+				break;
+		case 0x2D: 
+				fill_buffer(shift_pressed ? 'X' : 'x');
+				terminal_putchar(shift_pressed ? 'X' : 'x');
+				break;
+		case 0x2E: 
+				fill_buffer(shift_pressed ? 'C' : 'c');
+				terminal_putchar(shift_pressed ? 'C' : 'c');
+				break;
+		case 0x2F: 
+				fill_buffer(shift_pressed ? 'V' : 'v');
+				terminal_putchar(shift_pressed ? 'V' : 'v');
+				break;
+		case 0x30: 
+				fill_buffer(shift_pressed ? 'B' : 'b');
+				terminal_putchar(shift_pressed ? 'B' : 'b');
+				break;
+		case 0x31: 
+				fill_buffer(shift_pressed ? 'N' : 'n');
+				terminal_putchar(shift_pressed ? 'N' : 'n');
+				break;
+		case 0x32: 
+				fill_buffer(shift_pressed ? 'M' : 'm');
+				terminal_putchar(shift_pressed ? 'M' : 'm');
+				break;
 
 		// Special
 		case 0x39: terminal_putchar(' '); break; // Spacebar
-		case 0x1C: terminal_enter(); break; // Enter
+		case 0x1C: check_command(); terminal_enter(); break; // Enter
 		case 0x0E: is_extended = 1; terminal_removechar(); break; // Backspace
 		case 0x0F: terminal_writestring("   "); break; // Tab
 
 		// Arrow Keys
-		case 0x48: terminal_arrow_up(); break;
-		case 0x50: terminal_arrow_down(); break;
+		// case 0x48: terminal_arrow_up(); break;
+		// case 0x50: terminal_arrow_down(); break;
 		case 0x4B: terminal_arrow_left(); break;
 		case 0x4D: terminal_arrow_right(); break;
 		
 
 		//Random other characters
-		case 0x33: terminal_putchar(shift_pressed ? '<' : ','); break;
-		case 0x34: terminal_putchar(shift_pressed ? '>' : '.'); break;
-		case 0x35: terminal_putchar(shift_pressed ? '?' : '/'); break;
-		case 0x4A: terminal_putchar(shift_pressed ? '_' : '-'); break;
-		case 0x0D: terminal_putchar(shift_pressed ? '+' : '='); break;
-		case 0x54: terminal_putchar(shift_pressed ? '{' : '['); break;
-		case 0x1B: terminal_putchar(shift_pressed ? '}' : ']'); break;
-		case 0x2B: terminal_putchar(shift_pressed ? '|' : '\\'); break;
-		case 0x4C: terminal_putchar(shift_pressed ? ':' : ';'); break;
-		case 0x52: terminal_putchar(shift_pressed ? '"' : '\''); break;
-		case 0x29: terminal_putchar(shift_pressed ? '~' : '`'); break;
+		case 0x33: 
+					fill_buffer(shift_pressed ? '<' : ',');
+					terminal_putchar(shift_pressed ? '<' : ',');
+					break;
+		case 0x34: 
+					fill_buffer(shift_pressed ? '>' : '.');
+					terminal_putchar(shift_pressed ? '>' : '.');
+					break;
+		case 0x35: 
+					fill_buffer(shift_pressed ? '?' : '/');
+					terminal_putchar(shift_pressed ? '?' : '/');
+					break;
+		case 0x4A: 
+					fill_buffer(shift_pressed ? '_' : '-');
+					terminal_putchar(shift_pressed ? '_' : '-');
+					break;
+		case 0x0D: 
+					fill_buffer(shift_pressed ? '+' : '=');
+					terminal_putchar(shift_pressed ? '+' : '=');
+					break;
+		case 0x54: 
+					fill_buffer(shift_pressed ? '{' : '[');
+					terminal_putchar(shift_pressed ? '{' : '[');
+					break;
+		case 0x1B: 	
+					fill_buffer(shift_pressed ? '}' : ']');
+					terminal_putchar(shift_pressed ? '}' : ']');
+					break;
+		case 0x2B: 	
+					fill_buffer(shift_pressed ? '|' : '\\');
+					terminal_putchar(shift_pressed ? '|' : '\\');
+					break;
+		case 0x4C: 	
+					fill_buffer(shift_pressed ? ':' : ';');
+					terminal_putchar(shift_pressed ? ':' : ';');
+					break;
+		case 0x52: 	
+					fill_buffer(shift_pressed ? '"' : '\'');
+					terminal_putchar(shift_pressed ? '"' : '\'');
+					break;
+		case 0x29: 	
+					fill_buffer(shift_pressed ? '~' : '`');
+					terminal_putchar(shift_pressed ? '~' : '`');
+					break;
 
 		case 0x01: reboot(); break; //Reboot
 	}	
