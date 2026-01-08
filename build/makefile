@@ -12,12 +12,12 @@ OBJ = boot.o \
       ../src/kernel.o \
       ../src/cpu/idt.o \
       ../src/cpu/pic.o \
-      ../src/memory/PMM.o \
-      ../src/memory/VMM.o \
+      ../src/memory/manual_management/PMM.o \
+      ../src/memory/manual_management/VMM.o \
       ../src/driver/keyboard.o \
       ../src/driver/terminal.o \
       ../assembly/interupts.o \
-      ../assembly/vmem.o
+      ../assembly/VMM.o
 
 # Final Binary
 os.bin: $(OBJ)
