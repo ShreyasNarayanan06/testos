@@ -201,3 +201,4 @@ void terminal_clear() {
     terminal_writestring(PROMPT);
     update_cursor(t_col, t_row);
 }
+
