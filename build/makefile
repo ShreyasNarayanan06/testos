@@ -14,6 +14,7 @@ OBJ = boot.o \
       ../src/cpu/pic.o \
       ../src/memory/manual_management/PMM.o \
       ../src/memory/manual_management/VMM.o \
+      ../src/memory/user_interaction/fs.o \
       ../src/driver/keyboard.o \
       ../src/driver/terminal.o \
 	  ../src/driver/commands.o \
@@ -47,5 +48,7 @@ clean:
 	rm -f ../src/*.o
 	rm -f ../src/cpu/*.o
 	rm -f ../src/memory/*.o
+	rm -f ../src/memory/manual_management/*.o
+	rm -f ../src/memory/user_interaction/*.o
 	rm -f ../src/driver/*.o
 	rm -f ../assembly/*.o
