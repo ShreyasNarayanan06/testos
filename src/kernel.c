@@ -5,9 +5,9 @@
 #include "../headers/keyboard.h"
 #include "../headers/pic.h"
 #include "../headers/idt.h"
-#include "../headers/io.h"
 #include "../headers/PMM.h"
 #include "../headers/VMM.h"
+#include "../headers/fs.h"
 
 void kernel_main(uint32_t mbptr) {
     terminal_initialize();
@@ -16,6 +16,7 @@ void kernel_main(uint32_t mbptr) {
 	PMM_init(mbptr);
     heap_init();
 	vmem_init();
+	fs_init();
 
 	asm volatile ("sti");
 

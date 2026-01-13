@@ -1,3 +1,5 @@
+#pragma once
+
 #include <stdint.h>
 
 struct inode {
@@ -8,7 +10,7 @@ struct inode {
 
 struct directory {
     char name[32];
-    struct inode;
+    struct inode inode;
 };
 
 struct superblock {
@@ -40,4 +42,5 @@ Supernode -> directory array -> inode -> actual disk block
 bitmap tracks disk availability
 */
 
-void mem_cpy(uint8_t* src, uint8_t* dest, uint32_t size);
+void mem_cpy(uint32_t* src, uint32_t* dest, uint32_t size);
+void fs_init();

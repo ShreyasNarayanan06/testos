@@ -3,6 +3,8 @@ CC = i686-elf-gcc
 AS = i686-elf-as
 LD = i686-elf-gcc
 
+
+
 # Flags
 CFLAGS = -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I../headers
 LDFLAGS = -ffreestanding -O2 -nostdlib -T linker.ld -lgcc
@@ -38,8 +40,13 @@ boot.o: boot.s
 	$(AS) $< -o $@
 
 # Run OS in QEMU
-run: os.bin
-	qemu-system-i386 -kernel os.bin
+# Create a 10MB hard disk image (raw binary of zeros)
+disk.img:
+	dd if=/dev/zero of=disk.img bs=1M count=10
+
+# Run with the disk attached as Primary Master (-hda)
+run: os.bin disk.img
+	qemu-system-i386 -kernel os.bin -hda disk.img
 
 # Clean
 clean:
