@@ -47,7 +47,7 @@ disk.img:
 
 # Run with the disk attached as Primary Master (-hda)
 run: os.bin disk.img
-	qemu-system-i386 -kernel os.bin -drive file=disk.img,format=raw,cache=writethrough
+	qemu-system-i386 -machine pc -kernel os.bin -drive file=disk.img,format=raw,if=ide,index=0,media=disk
 # Clean
 clean:
 	rm -f os.bin
