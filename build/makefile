@@ -20,6 +20,7 @@ OBJ = boot.o \
       ../src/driver/keyboard.o \
       ../src/driver/terminal.o \
 	  ../src/driver/commands.o \
+	  ../src/driver/string.o \
       ../assembly/interupts.o \
       ../assembly/VMM.o
 
@@ -46,8 +47,7 @@ disk.img:
 
 # Run with the disk attached as Primary Master (-hda)
 run: os.bin disk.img
-	qemu-system-i386 -kernel os.bin -hda disk.img
-
+	qemu-system-i386 -kernel os.bin -drive file=disk.img,format=raw,cache=writethrough
 # Clean
 clean:
 	rm -f os.bin
