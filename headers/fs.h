@@ -5,7 +5,8 @@
 struct inode {
     uint32_t blocks[12];
     uint32_t size;
-    int permission; //1 is r, 0 is w
+    int type; //1 is file, 0 is directory
+    int permission; //1 is r/w, 0 is read only
 };
 
 struct directory {
@@ -14,10 +15,11 @@ struct directory {
 };
 
 struct superblock {
-    struct directory* directories;
-    uint32_t* disk_bitmap;
+    uint32_t directories_LBA;
+    uint32_t disk_bitmap_LBA;
     uint32_t total_disk_size;
     uint32_t num_inodes;
+    uint32_t magic_number;
 };
 
 /*
@@ -43,4 +45,7 @@ bitmap tracks disk availability
 */
 
 void mem_cpy(uint32_t* src, uint32_t* dest, uint32_t size);
+uint16_t* disk_read(uint32_t LBA, uint32_t sector_count);
+void disk_write(uint32_t LBA, uint32_t sector_count, uint16_t* buffer);
+void format_disk();
 void fs_init();

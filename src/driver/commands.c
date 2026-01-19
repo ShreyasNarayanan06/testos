@@ -5,6 +5,7 @@ then when enter is pressed the buffer is checked for a command
 */
 
 #include "../../headers/terminal.h"
+#include "../../headers/string.h"
 #include <stddef.h>
 
 char command_buffer[128];
@@ -13,24 +14,6 @@ size_t curr_size = 0;
 char command[128];
 char arg[128];
 
-int str_cmp(char *str1, char *str2) {
-    size_t len2 = 0;
-    while (str2[len2]) {
-        len2++;
-    }
-
-    size_t len1 = 0;
-    while (str1[len1]) {
-        len1++;
-    }
-
-    if(len1 != len2) return 0;
-
-    for(size_t i = 0; i < len1; i++) {
-        if(str1[i] != str2[i]) return 0;
-    }
-    return 1;
-}
 
 void fill_buffer(char c) {
   command_buffer[curr_size] = c;
