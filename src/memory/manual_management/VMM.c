@@ -34,7 +34,7 @@ void vmem_init() {
     uint32_t page_table_1_addr = (uint32_t)pm_alloc_page();
     uint32_t* page_table_1 = (uint32_t*)page_table_1_addr;
 
-    for(int i = 0; i < 1024; i++) page_table_1[i] = 0; //same as before
+    for(int i = 0; i < 1024; i++) page_table_1[i] = (i * 4096) | 3; 
 
     page_directory[0] = (page_table_1_addr | 0x3); //set the page directory index 0 to the pt1 we made
 
@@ -46,8 +46,8 @@ void vmem_init() {
 }
 
 void heap_init() {
-    heap_start = (uint32_t*)0xD0000000;
-    heap_end = (uint32_t*)0xE0000000;
+    heap_start = (uint32_t*)0x00200000;  
+    heap_end = (uint32_t*)0x00400000;    
     next_free = heap_start;
 }
 

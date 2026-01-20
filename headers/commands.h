@@ -7,5 +7,6 @@ void command_buffer_removechar();
 void command_repeat();
 void command_info();
 void command_usr();
+void command_shutdown();
 
 

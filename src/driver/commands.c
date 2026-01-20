@@ -7,6 +7,8 @@ then when enter is pressed the buffer is checked for a command
 #include "../../headers/terminal.h"
 #include "../../headers/string.h"
 #include <stddef.h>
+#include "../../headers/io.h"
+#include "../../headers/fs.h"
 
 char command_buffer[128];
 size_t curr_size = 0;
@@ -70,6 +72,8 @@ void command_help() {
     terminal_writestring("info: display OS version, release date, and author information");
     terminal_enter_no_prompt();
     terminal_writestring("usr: display current user");
+    terminal_enter_no_prompt();
+    terminal_writestring("shutdown: flush disk and exit QEMU");
     terminal_enter();
 }
 
@@ -89,6 +93,18 @@ void command_usr() {
     terminal_enter_no_prompt();
     terminal_writestring("User: naray");
     terminal_enter();
+}
+
+void command_shutdown() {
+    terminal_enter_no_prompt();
+    terminal_writestring("Shutting down...");
+    terminal_enter_no_prompt();
+    
+    // Flush filesystem writes first
+    disk_write(1, 1, (uint16_t*)sb);
+    
+    // QEMU exit: writing to port 0x604 triggers ACPI shutdown
+    outw(0x604, 0x2000);
 }
 
 // int checkspace() {
@@ -113,6 +129,8 @@ void check_command() {
     command_info();
   } else if(str_cmp(command, "usr")) {
     command_usr();
+  } else if(str_cmp(command, "shutdown")) {
+    command_shutdown();
   } else { //needs work
     // terminal_writenumber(checkspace());
     terminal_enter_no_prompt();

@@ -44,6 +44,10 @@ Supernode -> directory array -> inode -> actual disk block
 bitmap tracks disk availability
 */
 
+extern struct superblock* sb;
+extern uint32_t* disk_bitmap;
+extern struct directory* directories;
+
 void mem_cpy(uint32_t* src, uint32_t* dest, uint32_t size);
 uint16_t* disk_read(uint32_t LBA, uint32_t sector_count);
 void disk_write(uint32_t LBA, uint32_t sector_count, uint16_t* buffer);
