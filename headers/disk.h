@@ -52,4 +52,4 @@ void mem_cpy(uint32_t* src, uint32_t* dest, uint32_t size);
 uint16_t* disk_read(uint32_t LBA, uint32_t sector_count);
 void disk_write(uint32_t LBA, uint32_t sector_count, uint16_t* buffer);
 void format_disk();
-void fs_init();
+void disk_init();

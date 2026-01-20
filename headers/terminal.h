@@ -1,3 +1,5 @@
+#pragma once
+
 #include <stdint.h>
 #include <stddef.h>
 
@@ -5,6 +7,9 @@ extern size_t t_row;
 extern size_t t_col;
 extern uint8_t t_color;
 extern uint16_t* t_buffer;
+
+#define VGA_WIDTH 80 //sets the width of the VGA buffer to 80
+#define VGA_HEIGHT 25 //sets the height of the VGA buffer to 25
 
 enum vga_color {
 	VGA_COLOR_BLACK = 0, //colors are sourced from the VGA Color Table 
@@ -25,6 +30,8 @@ enum vga_color {
 	VGA_COLOR_WHITE = 15,
 };
 
+
+
 void terminal_initialize(void);
 void terminal_setcolor(uint8_t color);
 void terminal_putchar(char c);
@@ -34,11 +41,14 @@ void terminal_removechar();
 void terminal_enter();
 void terminal_arrow_right();
 void terminal_arrow_left();
-// void terminal_arrow_up();
-// void terminal_arrow_down();
+void terminal_arrow_up();
+void terminal_arrow_down();
 void terminal_writenumber(uint32_t n);
 void terminal_clear();
+void terminal_clear_TE();
 void terminal_enter_no_prompt();
 void terminal_scroll();
 void terminal_set_background(uint8_t bg_color);
+void update_cursor(int x, int y);
+void terminal_set_cursor(int x, int y);
 

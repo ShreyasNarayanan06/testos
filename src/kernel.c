@@ -7,7 +7,7 @@
 #include "../headers/idt.h"
 #include "../headers/PMM.h"
 #include "../headers/VMM.h"
-#include "../headers/fs.h"
+#include "../headers/disk.h"
 
 void kernel_main(uint32_t mbptr) {
     terminal_initialize();
@@ -16,7 +16,7 @@ void kernel_main(uint32_t mbptr) {
 	PMM_init(mbptr);
     heap_init();
 	vmem_init();
-	fs_init();
+	disk_init();
 
 	asm volatile ("sti");
 

@@ -3,10 +3,12 @@
 #include "../../headers/io.h"
 #include "../../headers/terminal.h"
 #include "../../headers/commands.h"
+#include "../../headers/buffer.h"
+#include "../../headers/textedit.h"
+#include "../../headers/keyboard.h"
 
 #define PROMPT "naray % "
 #define PROMPT_LENGTH 8
-
 
 
 static inline uint8_t vga_entry_color(enum vga_color foreground, enum vga_color background) {
@@ -113,14 +115,16 @@ void terminal_writenumber(uint32_t n) {
 }
 
 void terminal_removechar() {
-	if (t_col > PROMPT_LENGTH) {
+	size_t limit = (curr_buffer == COMMAND_BUFFER) ? 0: PROMPT_LENGTH;
+	
+	if (t_col > limit) {
         t_col--;
     } else {
 		return;
 	}
     
 	terminal_putentryat(' ', t_color, t_col, t_row);
-	command_buffer_removechar();
+	command_buffer_removechar(buffer_size, buffer);
 	update_cursor(t_col, t_row);
 }
 
@@ -130,7 +134,7 @@ void terminal_enter() {
 
 	t_col = 0;
 	
-	clear_buffer();
+	clear_buffer(&curr_size, command_buffer);
 	terminal_writestring(PROMPT);
 	update_cursor(t_col, t_row);
 }
@@ -159,19 +163,19 @@ void terminal_arrow_left() {
 
 }
 
-// void terminal_arrow_up() {
-// 	if(t_row == 0) t_row = VGA_HEIGHT - 1;
-// 	else t_row--;
+void terminal_arrow_up() {
+	if(t_row == 0) t_row = VGA_HEIGHT - 1;
+	else t_row--;
 
-// 	update_cursor(t_col, t_row);
-// }
+	update_cursor(t_col, t_row);
+}
 
-// void terminal_arrow_down() {
-// 	if(t_row == VGA_HEIGHT - 1) t_row = 0;
-// 	else t_row++;
+void terminal_arrow_down() {
+	if(t_row == VGA_HEIGHT - 1) t_row = 0;
+	else t_row++;
 
-// 	update_cursor(t_col, t_row);
-// }
+	update_cursor(t_col, t_row);
+}
 
 void terminal_clear() {
     for (size_t i = 0; i < VGA_HEIGHT * VGA_WIDTH; i++) {
@@ -185,6 +189,17 @@ void terminal_clear() {
     update_cursor(t_col, t_row);
 }
 
+void terminal_clear_TE() {
+	for (size_t i = 0; i < VGA_HEIGHT * VGA_WIDTH; i++) {
+        t_buffer[i] = vga_entry(' ', t_color);
+    }
+
+    t_row = 0;
+    t_col = 0;
+
+    update_cursor(t_col, t_row);
+}
+
 void terminal_set_background(uint8_t bg_color) {
     uint8_t current_fg = t_color & 0x0F;
     t_color = current_fg | (bg_color << 4);
@@ -193,4 +208,13 @@ void terminal_set_background(uint8_t bg_color) {
         uint8_t c = (uint8_t)(t_buffer[i] & 0xFF); 
         t_buffer[i] = vga_entry(c, t_color);       
     }
+}
+
+void terminal_set_cursor(int x, int y) {
+    if (x >= VGA_WIDTH) x = VGA_WIDTH - 1;
+    if (y >= VGA_HEIGHT) y = VGA_HEIGHT - 1;
+
+    t_col = x;
+    t_row = y;
+    update_cursor(t_col, t_row);
 }

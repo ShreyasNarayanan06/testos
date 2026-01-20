@@ -139,7 +139,7 @@ void disk_write(uint32_t LBA, uint32_t sector_count, uint16_t *buffer) {
     ;
 }
 
-void fs_init() {
+void disk_init() {
   ATA_init();
 
   sb = (struct superblock *)disk_read(1, 1);

@@ -9,32 +9,13 @@ then when enter is pressed the buffer is checked for a command
 #include <stddef.h>
 #include "../../headers/io.h"
 #include "../../headers/disk.h"
+#include "../../headers/textedit.h"
 
 char command_buffer[128];
 size_t curr_size = 0;
 
 char command[128];
 char arg[128];
-
-
-void fill_buffer(char c) {
-  command_buffer[curr_size] = c;
-  curr_size++;
-  // terminal_enter();
-  // terminal_writestring(command_buffer);
-}
-
-void clear_buffer() {
-  for(size_t i = 0; i < curr_size; i++) {
-    command_buffer[i] = '\0';
-  }
-  curr_size = 0;
-}
-
-void command_buffer_removechar() {
-    command_buffer[curr_size] = '\0';
-    curr_size--;
-}
 
 void parse_input() {
     int argflag = 0;
@@ -151,6 +132,8 @@ void check_command() {
     command_shutdown();
   } else if(str_cmp(command, "theme")) {
     command_theme();
+  } else if(str_cmp(command, "te")) {
+    textedit();
   } else { //needs work
     // terminal_writenumber(checkspace());
     terminal_enter_no_prompt();
