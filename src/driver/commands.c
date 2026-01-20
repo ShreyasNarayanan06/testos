@@ -8,7 +8,7 @@ then when enter is pressed the buffer is checked for a command
 #include "../../headers/string.h"
 #include <stddef.h>
 #include "../../headers/io.h"
-#include "../../headers/fs.h"
+#include "../../headers/disk.h"
 
 char command_buffer[128];
 size_t curr_size = 0;
@@ -107,6 +107,24 @@ void command_shutdown() {
     outw(0x604, 0x2000);
 }
 
+void command_theme() {
+  if(str_cmp(arg, "red")) {
+    terminal_set_background(VGA_COLOR_RED);
+  } else if(str_cmp(arg, "blue")) {
+    terminal_set_background(VGA_COLOR_BLUE);
+  } else if(str_cmp(arg, "green")) {
+    terminal_set_background(VGA_COLOR_GREEN);
+  } else if(str_cmp(arg, "magenta")) {
+    terminal_set_background(VGA_COLOR_MAGENTA);
+  } else if(str_cmp(arg, "cyan")) {
+    terminal_set_background(VGA_COLOR_CYAN);
+  } else if(str_cmp(arg, "white")) {
+    terminal_set_background(VGA_COLOR_WHITE);
+  }
+
+  terminal_enter();
+}
+
 // int checkspace() {
 //     for(size_t i = 0; i < curr_size; i++) {
 //         if(command[i] == ' ') {
@@ -131,6 +149,8 @@ void check_command() {
     command_usr();
   } else if(str_cmp(command, "shutdown")) {
     command_shutdown();
+  } else if(str_cmp(command, "theme")) {
+    command_theme();
   } else { //needs work
     // terminal_writenumber(checkspace());
     terminal_enter_no_prompt();

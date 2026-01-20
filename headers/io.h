@@ -2,7 +2,7 @@
 // env error counter = 3
 
 #include "VMM.h"
-#include "fs.h"
+#include "disk.h"
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>

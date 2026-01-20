@@ -7,24 +7,7 @@
 #define PROMPT "naray % "
 #define PROMPT_LENGTH 8
 
-enum vga_color {
-	VGA_COLOR_BLACK = 0, //colors are sourced from the VGA Color Table 
-	VGA_COLOR_BLUE = 1,
-	VGA_COLOR_GREEN = 2,
-	VGA_COLOR_CYAN = 3,
-	VGA_COLOR_RED = 4,
-	VGA_COLOR_MAGENTA = 5,
-	VGA_COLOR_BROWN = 6,
-	VGA_COLOR_LIGHT_GREY = 7,
-	VGA_COLOR_DARK_GREY = 8,
-	VGA_COLOR_LIGHT_BLUE = 9,
-	VGA_COLOR_LIGHT_GREEN = 10,
-	VGA_COLOR_LIGHT_CYAN = 11,
-	VGA_COLOR_LIGHT_RED = 12,
-	VGA_COLOR_LIGHT_MAGENTA = 13,
-	VGA_COLOR_LIGHT_BROWN = 14,
-	VGA_COLOR_WHITE = 15,
-};
+
 
 static inline uint8_t vga_entry_color(enum vga_color foreground, enum vga_color background) {
 	return foreground | background << 4; //combines the foreground and background colors and puts them into 8 bytes which is the hardware standard for the VGA Color Table
@@ -202,3 +185,12 @@ void terminal_clear() {
     update_cursor(t_col, t_row);
 }
 
+void terminal_set_background(uint8_t bg_color) {
+    uint8_t current_fg = t_color & 0x0F;
+    t_color = current_fg | (bg_color << 4);
+
+    for (size_t i = 0; i < VGA_HEIGHT * VGA_WIDTH; i++) {
+        uint8_t c = (uint8_t)(t_buffer[i] & 0xFF); 
+        t_buffer[i] = vga_entry(c, t_color);       
+    }
+}
