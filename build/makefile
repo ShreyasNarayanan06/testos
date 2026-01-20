@@ -16,7 +16,7 @@ OBJ = boot.o \
       ../src/cpu/pic.o \
       ../src/memory/manual_management/PMM.o \
       ../src/memory/manual_management/VMM.o \
-      ../src/memory/user_interaction/fs.o \
+      ../src/memory/user_interaction/disk.o \
       ../src/driver/keyboard.o \
       ../src/driver/terminal.o \
 	  ../src/driver/commands.o \
