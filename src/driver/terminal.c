@@ -115,7 +115,7 @@ void terminal_writenumber(uint32_t n) {
 }
 
 void terminal_removechar() {
-	size_t limit = (curr_buffer == COMMAND_BUFFER) ? 0: PROMPT_LENGTH;
+	size_t limit = (curr_buffer == TEXT_BUFFER) ? 0: PROMPT_LENGTH;
 	
 	if (t_col > limit) {
         t_col--;
